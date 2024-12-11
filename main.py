@@ -32,18 +32,18 @@ cars = []
 num_cars = 5
 car_speed = 3
 
-#Generate initial cars at random positions and directions
+# Generate initial cars at random positions and directions
 for i in range(num_cars):
     car_x = random.randint(0, screen_width - car_width)
-    car_y = random.randint(50, screen_height //2 -car_height)
-    car_direction = random.choice([-1, 1]) # -1 for left, 1 for right
+    car_y = random.randint(50, screen_height // 2 - car_height)
+    car_direction = random.choice([-1, 1])  # -1 for left, 1 for right
     cars.append([car_x, car_y, car_direction])
-
 
 # Game loop
 running = True
 score = 0
 font = pygame.font.Font(None, 36)
+clock = pygame.time.Clock()
 
 while running:
     for event in pygame.event.get():
@@ -61,39 +61,36 @@ while running:
     if keys[pygame.K_DOWN] and frog_y < screen_height - frog_size:
         frog_y += frog_speed
 
-
     # Car movement and collision detection
-    for i, car in enumerate(cars):
+    for car in cars:
         car[0] += car[2] * car_speed
         if car[0] < 0 or car[0] > screen_width - car_width:
             car[2] *= -1  # Reverse direction
 
-        #Collision Detection (simple bounding box)
+        # Collision Detection (simple bounding box)
         if (frog_x < car[0] + car_width and
-            frog_x + frog_size > car[0] and
-            frog_y < car[0] + car_height and
-            frog_y + frog_size > car[y]):
-            running = False #Game Over on collision
+                frog_x + frog_size > car[0] and
+                frog_y < car[1] + car_height and
+                frog_y + frog_size > car[1]):
+            running = False  # Game Over on collision
 
-
-    #Check if frog reaches the top
+    # Check if frog reaches the top
     if frog_y < 50:
         score += 1
         frog_x = screen_width // 2
         frog_y = screen_height - 50
 
-
     # Drawing
     screen.fill(black)
-    pygame.draw.rect(screen, green, (frog_x, frog_y, frog_size, frog_size)) # Frog
+    pygame.draw.rect(screen, green, (frog_x, frog_y, frog_size, frog_size))  # Frog
 
     for car in cars:
-        pygame.draw.rect(screen, red, (car[0], car[1], car_width, car_height)) # Cars
-
+        pygame.draw.rect(screen, red, (car[0], car[1], car_width, car_height))  # Cars
 
     score_text = font.render("Score: " + str(score), True, white)
     screen.blit(score_text, (10, 10))
 
     pygame.display.flip()
+    clock.tick(30)  # Limit to 30 FPS
 
 pygame.quit()
