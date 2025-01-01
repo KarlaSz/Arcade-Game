@@ -1,5 +1,7 @@
 # Frogger Game
 
+![Screenshot_2](https://github.com/user-attachments/assets/aec48b25-1804-462a-a056-9e75b6f4b3a6)
+
 #EN lang
 
 Welcome to **Frogger Game**, a Python implementation of the classic arcade-style game, where your task is to help a frog cross a busy road while avoiding oncoming cars. Built with `pygame`, this project is perfect for learning basic game development concepts.
